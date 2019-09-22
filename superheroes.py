@@ -77,7 +77,7 @@ class Hero:
         # TODO: Add armor object that is passed in to `self.armors`
         self.armors.append(armor)
 
-    def defend(self, damage_amt):
+    def defend(self, damage_amt=0):
         '''Runs `block` method on each armor.
           Returns sum of all blocks
         '''
@@ -132,11 +132,13 @@ class Hero:
 
           # Print the victor's name to the screen.
           if(self.is_alive()):
-            print(self.name + " won!")
-            self.add_kill
-          else(opponent.is_alive()):
-            print(opponent.name + " won!")
-            self.add_deaths
+              print(self.name + " won! against: " + opponent.name)
+              self.add_kill(1)
+              opponent.add_deaths(1)
+          else:
+              print(opponent.name + " won! against: " + self.name)
+              self.add_deaths(1)
+              opponent.add_kill(1)
           # else:
           #   print("They knocked each other out!")
 
@@ -185,28 +187,37 @@ class Team:
         # them fight until one or both teams have no surviving heroes.
         # Hint: Use the fight method in the Hero class.
 
-        #check to make sure both teams have surviving members // checked seperately for different team sizes
-        countSelf = 0
-        for hero1 in self.heroes:
-            if(hero1.is_alive() == True):
-                countSelf += 1
-        countOther = 0
-        for hero2 in other_team.heroes:
-            if(hero2.is_alive() == True):
-                countOther += 1
-        if(countSelf == 0):
-            #other team Won
+        self_are_alive = list()
+        other_team_are_alive = list()
 
-        elif(countOther == 0):
-            #seld team won
+        self_are_alive = self.heroes
+        other_team_are_alive = other_team.heroes
 
-        pass
+        while(len(self_are_alive) > 0 and len(other_team_are_alive) > 0 ):
+            self_champion = random.choice(self_are_alive)
+            other_team_champion = random.choice(other_team_are_alive)
+
+            self_current_deaths = self_champion.deaths
+            other_team_champion_current_deaths = other_team_champion.deaths
+
+            Hero.fight(self_champion, other_team_champion)
+
+            if(self_champion.deaths > self_current_deaths):
+                self_are_alive.remove(self_champion)
+            else:
+                other_team_are_alive.remove(other_team_champion)
+
+        if(len(self_are_alive) > 0):
+            print(self.name + " have defeated " + other_team.name)
+        else:
+            print(other_team.name + " have defeated " + self.name)
 
     def revive_heroes(self, health=100):
         ''' Reset all heroes health to starting_health'''
         # TODO: This method should reset all heroes health to their
         # original starting value.
-        pass
+        for hero in self.heroes:
+            hero.current_health = health
 
     def stats(self):
         '''Print team statistics'''
@@ -219,9 +230,17 @@ class Team:
 
 if __name__ == "__main__":
     team = Team("One")
+    team2 = Team("two")
     jodie = Hero("Jodie Foster")
+    yes = Hero("yes")
+    spider = Hero("Spiderman")
+    iron = Hero("Iron Man")
+    quickness = Ability("Quickness", 1300)
+    bs = Ability("Quickness", 1300)
+    spider.add_ability(quickness)
+    iron.add_ability(bs)
     team.add_hero(jodie)
-    print(team.heroes[0].name)# == "Jodie Foster"
-    team.remove_hero("Jodie Foster")
-    #print(team.heroes[0].name)
-    print(len(team.heroes))# 1 == 0
+    team.add_hero(yes)
+    team2.add_hero(spider)
+    team2.add_hero(iron)
+    team.attack(team2)
