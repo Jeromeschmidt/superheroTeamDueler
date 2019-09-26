@@ -391,14 +391,17 @@ class Arena(Team):
         if team_deaths == 0:
             team_deaths = 1
         print(self.team_two.name + " average K/D was: " + str(team_kills/team_deaths))
-        #display surviving heroes from each team
 
+        #display surviving heroes from each team
         for hero in self.team_one.heroes:
             if hero.deaths == 0:
                 print("survived from " + self.team_one.name + ": " + hero.name)
+                print(hero.name + " was rewarded " + str(random.randint(0,10000)) + " XP for surviving")
         for hero in self.team_two.heroes:
             if hero.deaths == 0:
                 print("survived from "+ self.team_two.name + ": " + hero.name)
+                print(hero.name + " was rewarded " + str(random.randint(0,10000)) + " XP for surviving")
+
 
 # if __name__ == "__main__":
 #     arena = Arena()
