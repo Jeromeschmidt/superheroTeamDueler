@@ -194,15 +194,41 @@ class Team:
         # them fight until one or both teams have no surviving heroes.
         # Hint: Use the fight method in the Hero class.
 
-        self_are_alive = list()
-        other_team_are_alive = list()
-
         self_are_alive = copy.copy(self.heroes)
         other_team_are_alive = copy.copy(other_team.heroes)
 
         while(len(self_are_alive) > 0 and len(other_team_are_alive) > 0 ):
             self_champion = random.choice(self_are_alive)
             other_team_champion = random.choice(other_team_are_alive)
+
+            self_current_deaths = self_champion.deaths
+            other_team_champion_current_deaths = other_team_champion.deaths
+
+            Hero.fight(self_champion, other_team_champion)
+
+            if(self_champion.deaths > self_current_deaths):
+                self_are_alive.remove(self_champion)
+            else:
+                other_team_are_alive.remove(other_team_champion)
+
+        if(len(self_are_alive) > 0):
+            print(self.name + " have defeated " + other_team.name)
+        else:
+            print(other_team.name + " have defeated " + self.name)
+
+    def attack_tanks(self, other_team):
+        #battles team with largest armor going first
+
+        self_are_alive = copy.copy(self.heroes)
+        other_team_are_alive = copy.copy(other_team.heroes)
+
+        #sorted heroes by armor
+        self_are_alive.sort(key=lambda self_are_alive: self_are_alive.defend(), reverse=True)
+        other_team_are_alive.sort(key=lambda other_team_are_alive: other_team_are_alive.defend(), reverse=True)
+
+        while(len(self_are_alive) > 0 and len(other_team_are_alive) > 0 ):
+            self_champion = self_are_alive[0]
+            other_team_champion = other_team_are_alive[0]
 
             self_current_deaths = self_champion.deaths
             other_team_champion_current_deaths = other_team_champion.deaths
@@ -352,12 +378,15 @@ class Arena(Team):
             hero = self.create_hero()
             self.team_two.add_hero(hero)
 
-    def team_battle(self):
+    def team_battle(self, which_battle=0):
         '''Battle team_one and team_two together.'''
         # TODO: This method should battle the teams together.
         # Call the attack method that exists in your team objects
         # for that battle functionality.
-        self.team_one.attack(self.team_two)
+        if which_battle == 0:
+            self.team_one.attack(self.team_two)
+        else:
+            self.team_one.attack_tanks(self.team_two)
 
     def show_stats(self):
         '''Prints team statistics to terminal.'''
@@ -440,14 +469,14 @@ if __name__ == "__main__":
 
     while game_is_running:
 
-        arena.team_battle()
+        which_battle = int(input("Enter 0 to battle normal or enter 1 to battle tanks first: "))
+        arena.team_battle(which_battle)
         arena.show_stats()
         play_again = input("Play Again? Y or N: ")
 
         #Check for Player Input
         if play_again.lower() == "n":
             game_is_running = False
-
         else:
             #Revive heroes to play again
             arena.team_one.revive_heroes()
