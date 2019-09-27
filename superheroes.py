@@ -130,7 +130,7 @@ class Hero:
     def fight(self, opponent):
       ''' Current Hero will take turns fighting the opponent hero passed in.
       '''
-      if(len(self.abilities) == 0 and len(opponent.abilities) == 0):
+      if((len(self.abilities) == 0 and len(opponent.abilities) == 0) or (self.attack() == 0) and opponent.attack() == 0):
           print("Draw")
       else:
           # TODO: Fight each hero until a victor emerges.
@@ -142,12 +142,14 @@ class Hero:
               print(self.name + " won! against: " + opponent.name)
               self.add_kill(1)
               opponent.add_deaths(1)
-          else:
+          elif(opponent.is_alive()):
               print(opponent.name + " won! against: " + self.name)
               self.add_deaths(1)
               opponent.add_kill(1)
-          # else:
-          #   print("They knocked each other out!")
+          else:
+            print("They knocked each other out!")
+            self.add_deaths(1)
+            opponent.add_deaths(1)
 
 class Weapon(Ability):
     def attack(self):
@@ -157,13 +159,25 @@ class Weapon(Ability):
         # TODO: Use what you learned to complete this method.
         return random.randint((self.attack_strength//2), self.attack_strength)
 
-class Team:
+class Team():
     def __init__(self, name):
         ''' Initialize your team with its team name
         '''
         # TODO: Implement this constructor by assigning the name and heroes, which should be an empty list
         self.name = name
         self.heroes = list()
+    def defend(self, damage_amt=0):
+        '''Runs `block` method on each armor.
+          Returns sum of all blocks
+        '''
+        # TODO: This method should run the block method on each armor in self.armors
+        for hero in self.heroes:
+            total_defend = 0
+            if(hero.armors != None):
+                for armor in hero.armors:
+                    total_defend += armor.block()
+                return total_defend
+            return 0
 
     def remove_hero(self, name):
         '''Remove hero from heroes list.
@@ -397,9 +411,13 @@ class Arena(Team):
         #     Show both teams average kill/death ratio.
         #     Show surviving heroes.
         # for hero in self.team_one.heroes:
-
+        print("\n")
+        print(self.team_one.name + " statistics: ")
         self.team_one.stats()
+        print("\n")
+        print(self.team_two.name + " statistics: ")
         self.team_two.stats()
+        print("\n")
 
         team_kills = 0
         team_deaths = 0
@@ -421,6 +439,7 @@ class Arena(Team):
             team_deaths = 1
         print(self.team_two.name + " average K/D was: " + str(team_kills/team_deaths))
 
+        print("\n")
         #display surviving heroes from each team
         for hero in self.team_one.heroes:
             if hero.deaths == 0:
@@ -431,6 +450,7 @@ class Arena(Team):
                 print("survived from "+ self.team_two.name + ": " + hero.name)
                 print(hero.name + " was rewarded " + str(random.randint(0,10000)) + " XP for surviving")
 
+        print("\n")
 
 # if __name__ == "__main__":
 #     arena = Arena()
