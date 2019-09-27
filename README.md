@@ -9,3 +9,6 @@
 * Each surviving hero receives an XP boost to reward heroes for winning
 
 * 5 additional unit tests were created to further test functionality
+
+
+Done by Jerome Schmidt for Make School FSP Fall 2019
