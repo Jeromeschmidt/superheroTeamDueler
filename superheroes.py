@@ -58,7 +58,10 @@ class Hero:
     def add_ability(self, ability):
         ''' Add ability to abilities list '''
         # Add ability object to abilities:List
-        self.abilities.append(ability)
+        if(self.is_authorized() == True):
+            self.abilities.append(ability)
+        else:
+            print("That ability is not allowed!")
 
     def attack(self):
         '''Calculate the total damage from all ability attacks.
@@ -76,7 +79,10 @@ class Hero:
             Armor: Armor Object
         '''
         # Add armor object that is passed in to `self.armors`
-        self.armors.append(armor)
+        if(is_authorized() == True):
+            self.armors.append(armor)
+        else:
+            print("That armor is not allowed!")
 
     def defend(self, damage_amt=0):
         '''Runs `block` method on each armor.
@@ -125,7 +131,16 @@ class Hero:
         # argument to self.abilities.
         # This means that self.abilities will be a list of
         # abilities and weapons.
-        self.abilities.append(weapon)
+        if(is_authorized() == True):
+            self.abilities.append(weapon)
+        else:
+            print("That Weapon is not allowed!")
+
+    def is_authorized(self):
+        if(random.randint(1,10) == random.randint(1,10)):
+            return False
+        else:
+            return True
 
     def fight(self, opponent):
       ''' Current Hero will take turns fighting the opponent hero passed in.
@@ -166,6 +181,8 @@ class Team():
         # Implement this constructor by assigning the name and heroes, which should be an empty list
         self.name = name
         self.heroes = list()
+
+    #added for test cases, not needed for functionality
     def defend(self, damage_amt=0):
         '''Runs `block` method on each armor.
           Returns sum of all blocks
