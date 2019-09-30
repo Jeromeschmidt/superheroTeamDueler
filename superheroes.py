@@ -228,8 +228,10 @@ class Team():
             ran_away = random.randint(1,2)
             if(ran_away == 1):
                 print(self.name + "got initmidated and ran away!")
+                print(opponent.name + "has won!")
             else:
                 print(opponent.name + "got initmidated and ran away!")
+                print(self.name + "has won!")
         else:
 
             self_are_alive = copy.copy(self.heroes)
