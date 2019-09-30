@@ -10,5 +10,9 @@
 
 * 5 additional unit tests were created to further test functionality
 
+* There is now a likelihood abilities, armors, and weapons  can be banned
+
+* There is now a small probability that a team may be intimidated and run away
+
 
 Done by Jerome Schmidt for Make School FSP Fall 2019
