@@ -487,14 +487,15 @@ class Arena(Team):
         print("\n")
 
         #display surviving heroes from each team
+        XP_bonus = random.randint(0,10000)
         for hero in self.team_one.heroes:
             if hero.deaths == 0:
                 print("survived from " + self.team_one.name + ": " + hero.name)
-                print(hero.name + " was rewarded " + str(random.randint(0,10000)) + " XP for surviving")
+                print(hero.name + " was rewarded " + str(XP_bonus) + " XP for surviving")
         for hero in self.team_two.heroes:
             if hero.deaths == 0:
                 print("survived from "+ self.team_two.name + ": " + hero.name)
-                print(hero.name + " was rewarded " + str(random.randint(0,10000)) + " XP for surviving")
+                print(hero.name + " was rewarded " + str(XP_bonus) + " XP for surviving")
 
         print("\n")
 
