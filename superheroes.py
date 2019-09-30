@@ -258,32 +258,41 @@ class Team():
 
     def attack_tanks(self, other_team):
         #battles team with largest armor going first
-
-        self_are_alive = copy.copy(self.heroes)
-        other_team_are_alive = copy.copy(other_team.heroes)
-
-        #sorted heroes by armor
-        self_are_alive.sort(key=lambda self_are_alive: self_are_alive.defend(), reverse=True)
-        other_team_are_alive.sort(key=lambda other_team_are_alive: other_team_are_alive.defend(), reverse=True)
-
-        while(len(self_are_alive) > 0 and len(other_team_are_alive) > 0 ):
-            self_champion = self_are_alive[0]
-            other_team_champion = other_team_are_alive[0]
-
-            self_current_deaths = self_champion.deaths
-            other_team_champion_current_deaths = other_team_champion.deaths
-
-            Hero.fight(self_champion, other_team_champion)
-
-            if(self_champion.deaths > self_current_deaths):
-                self_are_alive.remove(self_champion)
+        if(random.randint(1,100) == random.randint(1,100)):
+            ran_away = random.randint(1,2)
+            if(ran_away == 1):
+                print(self.name + "got initmidated and ran away!")
+                print(opponent.name + "has won!")
             else:
-                other_team_are_alive.remove(other_team_champion)
+                print(opponent.name + "got initmidated and ran away!")
+                print(self.name + "has won!")
 
-        if(len(self_are_alive) > 0):
-            print(self.name + " have defeated " + other_team.name)
         else:
-            print(other_team.name + " have defeated " + self.name)
+            self_are_alive = copy.copy(self.heroes)
+            other_team_are_alive = copy.copy(other_team.heroes)
+
+            #sorted heroes by armor
+            self_are_alive.sort(key=lambda self_are_alive: self_are_alive.defend(), reverse=True)
+            other_team_are_alive.sort(key=lambda other_team_are_alive: other_team_are_alive.defend(), reverse=True)
+
+            while(len(self_are_alive) > 0 and len(other_team_are_alive) > 0 ):
+                self_champion = self_are_alive[0]
+                other_team_champion = other_team_are_alive[0]
+
+                self_current_deaths = self_champion.deaths
+                other_team_champion_current_deaths = other_team_champion.deaths
+
+                Hero.fight(self_champion, other_team_champion)
+
+                if(self_champion.deaths > self_current_deaths):
+                    self_are_alive.remove(self_champion)
+                else:
+                    other_team_are_alive.remove(other_team_champion)
+
+            if(len(self_are_alive) > 0):
+                print(self.name + " have defeated " + other_team.name)
+            else:
+                print(other_team.name + " have defeated " + self.name)
 
     def revive_heroes(self, health=100):
         ''' Reset all heroes health to starting_health'''
