@@ -71,7 +71,11 @@ class Hero:
         # in self.abilities and returns the total as an integer.
         total_attack = 0
         for ability in self.abilities:
-            total_attack += ability.attack()
+            #possible attack negation
+            if(random.randint(1,100) == 50):
+                print(self.name  + "'s attach was negated!")
+            else:
+                total_attack += ability.attack()
         return total_attack
 
     def add_armor(self, armor):
