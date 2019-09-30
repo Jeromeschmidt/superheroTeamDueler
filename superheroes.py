@@ -83,7 +83,7 @@ class Hero:
             Armor: Armor Object
         '''
         # Add armor object that is passed in to `self.armors`
-        if(is_authorized() == True):
+        if(self.is_authorized() == True):
             self.armors.append(armor)
         else:
             print("That armor is not allowed!")
@@ -135,7 +135,7 @@ class Hero:
         # argument to self.abilities.
         # This means that self.abilities will be a list of
         # abilities and weapons.
-        if(is_authorized() == True):
+        if(self.is_authorized() == True):
             self.abilities.append(weapon)
         else:
             print("That Weapon is not allowed!")
@@ -388,22 +388,28 @@ class Arena(Team):
         Hero_name = input("What would you like the new Hero to be called?\n")
         new_Hero = Hero(Hero_name)
 
-        add_ability = input("Add an ability? Y or N: ")
+        add_ability = "y"
+        add_weapon = "y"
+        add_armor = "y"
 
-        if add_ability.lower() == "y":
-            ability = self.create_ability()
-            new_Hero.add_ability(ability)
+        while((add_ability.lower() == "y") or (add_weapon.lower() == "y") or (add_armor.lower() == "y")):
 
-        add_weapon = input("Add an weapon? Y or N: ")
+            add_ability = input("Add an ability? Y or N: ")
 
-        if add_weapon.lower() == "y":
-            weapon = self.create_weapon()
-            new_Hero.add_weapon(weapon)
+            if add_ability.lower() == "y":
+                ability = self.create_ability()
+                new_Hero.add_ability(ability)
 
-        add_armor = input("Add an armor? Y or N: ")
-        if add_armor.lower() == "y":
-            armor = self.create_armor()
-            new_Hero.add_armor(armor)
+            add_weapon = input("Add an weapon? Y or N: ")
+
+            if add_weapon.lower() == "y":
+                weapon = self.create_weapon()
+                new_Hero.add_weapon(weapon)
+
+            add_armor = input("Add an armor? Y or N: ")
+            if add_armor.lower() == "y":
+                armor = self.create_armor()
+                new_Hero.add_armor(armor)
 
         return new_Hero
 

@@ -14,5 +14,6 @@
 
 * There is now a small probability that a team may be intimidated and run away
 
+* There is a small possibility that an attack is negated
 
 Done by Jerome Schmidt for Make School FSP Fall 2019
