@@ -224,28 +224,35 @@ class Team():
         # Randomly select a living hero from each team and have
         # them fight until one or both teams have no surviving heroes.
         # Hint: Use the fight method in the Hero class.
-
-        self_are_alive = copy.copy(self.heroes)
-        other_team_are_alive = copy.copy(other_team.heroes)
-
-        while(len(self_are_alive) > 0 and len(other_team_are_alive) > 0 ):
-            self_champion = random.choice(self_are_alive)
-            other_team_champion = random.choice(other_team_are_alive)
-
-            self_current_deaths = self_champion.deaths
-            other_team_champion_current_deaths = other_team_champion.deaths
-
-            Hero.fight(self_champion, other_team_champion)
-
-            if(self_champion.deaths > self_current_deaths):
-                self_are_alive.remove(self_champion)
+        if(random.randint(1,100) == random.randint(1,100)):
+            ran_away = random.randint(1,2)
+            if(ran_away == 1):
+                print(self.name + "got initmidated and ran away!")
             else:
-                other_team_are_alive.remove(other_team_champion)
-
-        if(len(self_are_alive) > 0):
-            print(self.name + " have defeated " + other_team.name)
+                print(opponent.name + "got initmidated and ran away!")
         else:
-            print(other_team.name + " have defeated " + self.name)
+
+            self_are_alive = copy.copy(self.heroes)
+            other_team_are_alive = copy.copy(other_team.heroes)
+
+            while(len(self_are_alive) > 0 and len(other_team_are_alive) > 0 ):
+                self_champion = random.choice(self_are_alive)
+                other_team_champion = random.choice(other_team_are_alive)
+
+                self_current_deaths = self_champion.deaths
+                other_team_champion_current_deaths = other_team_champion.deaths
+
+                Hero.fight(self_champion, other_team_champion)
+
+                if(self_champion.deaths > self_current_deaths):
+                    self_are_alive.remove(self_champion)
+                else:
+                    other_team_are_alive.remove(other_team_champion)
+
+            if(len(self_are_alive) > 0):
+                print(self.name + " have defeated " + other_team.name)
+            else:
+                print(other_team.name + " have defeated " + self.name)
 
     def attack_tanks(self, other_team):
         #battles team with largest armor going first
